@@ -1,0 +1,60 @@
+<div class="phones-container" ng-init="showPhones = true; orderByName = true">
+  <div class="buttons-panel">
+    <div class="checkbox-button" ng-click="showPhones = !showPhones">
+      <input type="checkbox" ng-checked="showPhones" /> Show phones
+    </div>
+    <input
+      type="text"
+      placeholder="Filter by"
+      ng-model="searchText[selectedName]"
+      ng-init="selectedName='$'"
+    />
+    <select ng-model="selectedName" ng-if="users && users[0]">
+      <option value="$" selected>All</option>
+      <option ng-repeat="(key, value) in users[0]" value="{{ key }}">
+        {{ key }}
+      </option>
+    </select>
+    <button ng-click="refreshStorage()">Refresh Storage</button>
+    <div class="checkbox-button long" ng-click="orderByName = !orderByName">
+      <input type="checkbox" ng-checked="orderByName" /> Order by Name
+    </div>
+
+    <div>
+      <input type="text" placeholder="Name" ng-model="addUser_name" />
+      <input type="text" placeholder="Phone" ng-model="addUser_phone" />
+      <button ng-click="addUser(addUser_name, addUser_phone)">Add user</button>
+    </div>
+  </div>
+
+  <div class="phones">
+    <table cellspacing="0">
+      <tr
+        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : '' "
+        ng-class="{[className]: hover[className + $index], [setColorByName(user.name)]: true}"
+        ng-mouseenter="hover[className + $index] = true"
+        ng-mouseleave="changeColor()"
+      >
+        <td class="td-short">
+          <button ng-click="deleteUser($index)">Delete</button>
+        </td>
+        <td class="td-short">
+          <button ng-click="updateUser($index, name, phone)">
+            Update
+          </button>
+        </td>
+        <td class="td-short">
+          <input type="text" ng-model="name" ng-init="name=user.name" />
+        </td>
+        <td>
+          <input
+            type="text"
+            ng-model="phone"
+            ng-init="phone=user.phone"
+            ng-show="showPhones"
+          />
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,4 +1,8 @@
 import angular from "angular";
-import phonesComponent from "./components/phones/phones.component";
+import UsersComponent from "./components/users/users.component";
+import getUsersData from "./services/getUserData";
 
-angular.module("app", [phonesComponent]);
+angular
+  .module("app", [])
+  .component("usersComponent", UsersComponent)
+  .factory("getUsersData", getUsersData);

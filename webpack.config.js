@@ -34,7 +34,7 @@ module.exports = (env, argv) => {
 
   const config = {
     entry: {
-      app: sourcePath + '/app/index.js',
+      app: sourcePath + '/app/index.js'
     },
     output: {
       path: distPath,
