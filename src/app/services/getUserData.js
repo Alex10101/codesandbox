@@ -4,11 +4,11 @@ export default function getUsersData($q) {
       if (localStorage.getItem("users") === null) {
         import("../dist/users.json").then(function(users) {
           localStorage.setItem("users", JSON.stringify(users));
-          resolve();
+          resolve(users.data);
         });
         return;
       }
-      resolve();
+      resolve(JSON.parse(localStorage.getItem("users")).data);
     });
   };
 }

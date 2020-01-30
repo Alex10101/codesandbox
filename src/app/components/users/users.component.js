@@ -1,6 +1,6 @@
 function usersController($scope, getUsersData) {
-  getUsersData().then(function() {
-    $scope.users = JSON.parse(localStorage.getItem("users")).data;
+  getUsersData().then(function(users) {
+    $scope.users = users;
     $scope.className = "red";
     // $scope.$watch("users", updateStorage); // why this works with "className" but dosen't with "users"?
 
@@ -13,8 +13,8 @@ function usersController($scope, getUsersData) {
       if (name[0] === "B") return "blue";
     };
 
-    $scope.updateUser = function($index, name, phone) {
-      $scope.users[$index] = { name, phone };
+    $scope.updateUser = function(user, name, phone) {
+      $scope.users[$scope.users.indexOf(user)] = { name, phone };
       updateStorage();
     };
 
@@ -25,8 +25,8 @@ function usersController($scope, getUsersData) {
       }
     };
 
-    $scope.deleteUser = function($index) {
-      $scope.users.splice($index, 1);
+    $scope.deleteUser = function(user) {
+      $scope.users.splice($scope.users.indexOf(user), 1);
       updateStorage();
     };
 
@@ -40,8 +40,8 @@ function usersController($scope, getUsersData) {
 
     $scope.refreshStorage = function() {
       localStorage.clear();
-      getUsersData().then(function() {
-        $scope.users = JSON.parse(localStorage.getItem("users")).data;
+      getUsersData().then(function(users) {
+        $scope.users = users;
       });
     };
   });

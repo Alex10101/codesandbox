@@ -30,16 +30,16 @@
   <div class="phones">
     <table cellspacing="0">
       <tr
-        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : '' "
+        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : ''"
         ng-class="{[className]: hover[className + $index], [setColorByName(user.name)]: true}"
         ng-mouseenter="hover[className + $index] = true"
         ng-mouseleave="changeColor()"
       >
         <td class="td-short">
-          <button ng-click="deleteUser($index)">Delete</button>
+          <button ng-click="deleteUser(user)">Delete</button>
         </td>
         <td class="td-short">
-          <button ng-click="updateUser($index, name, phone)">
+          <button ng-click="updateUser(user, name, phone)">
             Update
           </button>
         </td>
