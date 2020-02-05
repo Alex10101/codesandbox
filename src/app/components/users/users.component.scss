@@ -19,42 +19,4 @@
   > div {
     margin: 30px;
   }
-
-  .phones {
-    table {
-      width: 100%;
-
-      td {
-        transition: 0.3s;
-      }
-
-      .td-short {
-        width: 50px;
-      }
-
-      .red {
-        background-color: $red;
-      }
-
-      .blue {
-        background-color: $blue;
-      }
-
-      input {
-        background: none;
-        border: none;
-      }
-
-      button {
-        border: none;
-        background: none;
-        border-right: 2px solid black;
-      }
-
-      button:hover {
-        cursor: pointer;
-      }
-
-    }
-  }
 }

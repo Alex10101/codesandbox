@@ -1,0 +1,6 @@
+<table cellspacing="0">
+    <contact
+      ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : ''"
+      user="user"
+    ></contact>
+</table>

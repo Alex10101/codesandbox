@@ -1,0 +1,21 @@
+<tr>
+  <td class="td-short">
+    <button ng-click="deleteUser(user)">Delete</button>
+  </td>
+  <td class="td-short">
+    <button ng-click="updateUser(user, name, phone)">
+      Update
+    </button>
+  </td>
+  <td class="td-short">
+    <input type="text" ng-model="name" ng-init="name=user.name" />
+  </td>
+  <td>
+    <input
+      type="text"
+      ng-model="phone"
+      ng-init="phone=user.phone"
+      ng-show="showPhones"
+    />
+  </td>
+</tr>
