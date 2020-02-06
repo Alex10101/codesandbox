@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "c456b7472134541bf789";
+/******/ 	var hotCurrentHash = "6b344fc84e0c71bbbe15";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -762,11 +762,6 @@
 /******/
 /******/ 	var deferredModules = [];
 /******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + ".bundle." + hotCurrentHash.substr(0, 4) + ".js"
-/******/ 	}
-/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/
@@ -794,66 +789,6 @@
 /******/ 		return module.exports;
 /******/ 	}
 /******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				// create error before stack unwound to get useful stacktrace later
-/******/ 				var error = new Error();
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							error.message = 'Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')';
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
 /******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
@@ -907,9 +842,6 @@
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
 /******/ 	// __webpack_hash__
 /******/ 	__webpack_require__.h = function() { return hotCurrentHash; };
 /******/
@@ -929,66 +861,69 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/app/components/users/users.component.html":
-/*!*******************************************************!*\
-  !*** ./src/app/components/users/users.component.html ***!
-  \*******************************************************/
+/***/ "./src/app/components/contacts/contacts.component.html":
+/*!*************************************************************!*\
+  !*** ./src/app/components/contacts/contacts.component.html ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=phones-container ng-init=\"showPhones = true; orderByName = true\"> <div class=buttons-panel> <div class=checkbox-button ng-click=\"showPhones = !showPhones\"> <input type=checkbox ng-checked=showPhones /> Show phones </div> <input type=text placeholder=\"Filter by\" ng-model=searchText[selectedName] ng-init=\"selectedName='$'\"/> <select ng-model=selectedName ng-if=\"users && users[0]\"> <option value=$ selected=selected>All</option> <option ng-repeat=\"(key, value) in users[0]\" value=\"{{ key }}\"> {{ key }} </option> </select> <button ng-click=refreshStorage()>Refresh Storage</button> <div class=\"checkbox-button long\" ng-click=\"orderByName = !orderByName\"> <input type=checkbox ng-checked=orderByName /> Order by Name </div> <div> <input type=text placeholder=Name ng-model=addUser_name /> <input type=text placeholder=Phone ng-model=addUser_phone /> <button ng-click=\"addUser(addUser_name, addUser_phone)\">Add user</button> </div> </div> <div class=phones> <table cellspacing=0> <tr ng-if=users.length ng-repeat=\"user in users | filter:searchText | orderBy: orderByName ? 'name' : '' track by $index\" ng-class=\"{[className]: hover[className + $index], [setColorByName(user.name)]: true}\" ng-mouseenter=\"hover[className + $index] = true\" ng-mouseleave=changeColor()> <td class=td-short> <button ng-click=deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"updateUser(user, name, phone)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\"/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> </table> </div> </div> ";
+module.exports = "<div class=phones-container ng-init=\"showPhones = true; orderByName = true\"> <div class=buttons-panel> <div class=checkbox-button ng-click=\"showPhones = !showPhones\"> <input type=checkbox ng-model=showPhones /> Show phones </div> <input type=text placeholder=Search ng-model=searchText /> <button ng-click=refreshStorage()>Refresh Storage</button> <div class=\"checkbox-button long\" ng-click=\"orderByName = !orderByName\"> <input type=checkbox ng-model=orderByName /> Order by Name </div> <div> <input type=text placeholder=Name ng-model=addUser_name /> <input type=text placeholder=Phone ng-model=addUser_phone /> <button ng-click=\"addUser(addUser_name, addUser_phone)\">Add user</button> </div> </div> <div class=phones> <table cellspacing=0> <tr ng-if=users.length ng-repeat=\"user in users | filter:searchText | orderBy: orderByName ? 'name' : ''\" ng-class=\"{[setColorByName(user.name)]: true}\"> <td class=td-short> <button ng-click=deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"updateUser(user, name, phone, $index)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\"/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> </table> </div> </div> ";
 
 /***/ }),
 
-/***/ "./src/app/components/users/users.component.js":
-/*!*****************************************************!*\
-  !*** ./src/app/components/users/users.component.js ***!
-  \*****************************************************/
+/***/ "./src/app/components/contacts/contacts.component.js":
+/*!***********************************************************!*\
+  !*** ./src/app/components/contacts/contacts.component.js ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function usersController($scope, usersService) {
-  $scope.users = usersService.users;
-  $scope.updateUser = usersService.updateUser
-  $scope.addUser = usersService.addUser
-  $scope.deleteUser = usersService.deleteUser
-  $scope.refreshStorage = usersService.refreshStorage
-
-  $scope.className = "red";
+function usersController($scope, contactsService) {
+  $scope.users = contactsService.users;
+  $scope.updateUser = contactsService.updateUser
+  $scope.addUser = contactsService.addUser
+  $scope.deleteUser = contactsService.deleteUser
+  $scope.refreshStorage = contactsService.refreshStorage
 
   $scope.setColorByName = function(name) {
-    if (name[0] === "A") return "red";
-    if (name[0] === "B") return "blue";
-  };
-
-  $scope.changeColor = function() {
-    if ($scope.className === "red") {
-      $scope.className = "blue";
-    } else {
-      $scope.className = "red";
+    if(name) {
+      if (name[0] === "A") return "red";
+      if (name[0] === "B") return "blue";
     }
   };
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   controller: usersController,
-  template: __webpack_require__(/*! ./users.component.html */ "./src/app/components/users/users.component.html"),
-  styles: [__webpack_require__(/*! ./users.component.scss */ "./src/app/components/users/users.component.scss")]
+  template: __webpack_require__(/*! ./contacts.component.html */ "./src/app/components/contacts/contacts.component.html"),
+  styles: [__webpack_require__(/*! ./contacts.component.scss */ "./src/app/components/contacts/contacts.component.scss")]
 });
 
 
 /***/ }),
 
-/***/ "./src/app/components/users/users.component.scss":
-/*!*******************************************************!*\
-  !*** ./src/app/components/users/users.component.scss ***!
-  \*******************************************************/
+/***/ "./src/app/components/contacts/contacts.component.scss":
+/*!*************************************************************!*\
+  !*** ./src/app/components/contacts/contacts.component.scss ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ "./src/app/dist/contacts.json":
+/*!************************************!*\
+  !*** ./src/app/dist/contacts.json ***!
+  \************************************/
+/*! exports provided: data, default */
+/***/ (function(module) {
+
+module.exports = {"data":[{"name":"Asmussen","phone":"+1 (905) 431-2368"},{"name":"Imelda","phone":"+1 (902) 428-3010"},{"name":"Castro","phone":"+1 (945) 436-3360"},{"name":"Victoria","phone":"+1 (948) 506-3201"},{"name":"Kerri","phone":"+1 (915) 493-3007"},{"name":"Bines","phone":"+1 (928) 559-3862"},{"name":"Strickland","phone":"+1 (880) 528-3555"},{"name":"Kris","phone":"+1 (819) 458-3869"},{"name":"Whitney","phone":"+1 (937) 546-2497"},{"name":"Janice","phone":"+1 (883) 591-2617"}]};
 
 /***/ }),
 
@@ -1003,64 +938,73 @@ function usersController($scope, usersService) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
 /* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_users_users_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/users/users.component */ "./src/app/components/users/users.component.js");
-/* harmony import */ var _services_usersService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/usersService */ "./src/app/services/usersService.js");
+/* harmony import */ var _components_contacts_contacts_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/contacts/contacts.component */ "./src/app/components/contacts/contacts.component.js");
+/* harmony import */ var _services_contacts_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./services/contacts.service */ "./src/app/services/contacts.service.js");
 
 
 
 
 angular__WEBPACK_IMPORTED_MODULE_0___default.a
   .module("app", [])
-  .service("usersService", _services_usersService__WEBPACK_IMPORTED_MODULE_2__["default"])
-  .component("usersComponent", _components_users_users_component__WEBPACK_IMPORTED_MODULE_1__["default"]);
+  .service("contactsService", _services_contacts_service__WEBPACK_IMPORTED_MODULE_2__["default"])
+  .component("contactsComponent", _components_contacts_contacts_component__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
 /***/ }),
 
-/***/ "./src/app/services/usersService.js":
-/*!******************************************!*\
-  !*** ./src/app/services/usersService.js ***!
-  \******************************************/
+/***/ "./src/app/services/contacts.service.js":
+/*!**********************************************!*\
+  !*** ./src/app/services/contacts.service.js ***!
+  \**********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return usersService; });
-function usersService() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return contactsService; });
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! angular */ "./node_modules/angular/index.js");
+/* harmony import */ var angular__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(angular__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _dist_contacts_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../dist/contacts.json */ "./src/app/dist/contacts.json");
+var _dist_contacts_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../dist/contacts.json */ "./src/app/dist/contacts.json", 1);
+
+
+
+function contactsService() {
   this.users = [];
-  var self = this;
+  setUsers = setUsers.bind(this)
   setUsers()
 
   function setUsers() {
+    console.log(this)
     if (localStorage.getItem("users") === null) {
-      __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.t.bind(null, /*! ../dist/users.json */ "./src/app/dist/users.json", 3)).then(function(users) {
-        localStorage.setItem("users", JSON.stringify(users));
-        self.users = users.data;
-      });
+      localStorage.setItem("users", angular__WEBPACK_IMPORTED_MODULE_0___default.a.toJson(_dist_contacts_json__WEBPACK_IMPORTED_MODULE_1__));
+      this.users = _dist_contacts_json__WEBPACK_IMPORTED_MODULE_1__.data;
       return;
     }
-    self.users = JSON.parse(localStorage.getItem("users")).data;
+    this.users = angular__WEBPACK_IMPORTED_MODULE_0___default.a.fromJson(localStorage.getItem("users")).data;
   }
 
-  this.updateUser = function(user, name, phone) {
-    self.users[self.users.indexOf(user)] = { name: name, phone: phone };
-    updateStorage();
+  this.updateUser = function(user, name, phone, index) {
+    this.users[this.users.indexOf(user)] = {
+      name: name,
+      phone: phone,
+      $$hashKey: index
+    };
+    updateStorage.bind(this)();
   };
 
   this.addUser = function(name, phone) {
     if (name && phone) {
-      self.users.push({ name: name, phone: phone });
-      updateStorage();
+      this.users.push({ name: name, phone: phone });
+      updateStorage.bind(this)();
     }
   };
 
   this.deleteUser = function(user) {
+    console.log(this.users)
 
-    self.users = self.users.filter(function() {
-      return !self.users.indexOf(user)
-    });
-    updateStorage();
+    this.users.splice(this.users.indexOf(user), 1);
+    updateStorage.bind(this)();
   };
 
   this.refreshStorage = function() {
@@ -1069,13 +1013,12 @@ function usersService() {
   };
 
   function updateStorage() {
-    localStorage.setItem("users", JSON.stringify({ data: self.users }));
+    localStorage.setItem("users", angular__WEBPACK_IMPORTED_MODULE_0___default.a.toJson({ data: this.users }));
   }
-
 }
 
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.bundle.c456.js.map
+//# sourceMappingURL=app.bundle.6b34.js.map
