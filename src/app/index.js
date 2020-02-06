@@ -1,4 +1,4 @@
 import angular from "angular";
-import phonesComponent from "./components/phones/phones.component";
+import contactsComponent from "./components/contacts/contacts.component";
 
-angular.module("app", [phonesComponent]);
+angular.module("app", []).component("contactsComponent", contactsComponent);

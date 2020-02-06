@@ -4,14 +4,9 @@
   </div>
 
   <div class="phones">
-    <div
-      ng-show="showPhones"
-      ng-repeat="phone in phones"
-      ng-class="{[className]: hover[className + $index]}"
-      ng-mouseenter="hover[className + $index] = true"
-      ng-mouseleave="changeColor()"
-    >
-      {{ phone }}
+    <div ng-repeat="contact in contacts" ng-class="{[setColorByName(contact.name)]: true}">
+      <span>{{ contact.name }}</span>
+      <span ng-show="showPhones">{{ contact.phone }}</span>
     </div>
   </div>
 </div>
