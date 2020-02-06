@@ -1,4 +1,5 @@
 <div class="phones-container" ng-init="showPhones = true; orderByName = true">
+  <!--  todo:  replace with ng-model-->
   <div class="buttons-panel">
     <div class="checkbox-button" ng-click="showPhones = !showPhones">
       <input type="checkbox" ng-checked="showPhones" /> Show phones
@@ -29,8 +30,10 @@
 
   <div class="phones">
     <table cellspacing="0">
+      <!--          todo:  filter into directive-->
       <tr
-        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : ''"
+        ng-if="users.length"
+        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : '' track by $index"
         ng-class="{[className]: hover[className + $index], [setColorByName(user.name)]: true}"
         ng-mouseenter="hover[className + $index] = true"
         ng-mouseleave="changeColor()"
