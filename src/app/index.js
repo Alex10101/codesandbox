@@ -1,8 +1,8 @@
 import angular from "angular";
-import UsersComponent from "./components/users/users.component";
-import usersService from "./services/usersService";
+import contactsComponent from "./components/contacts/contacts.component";
+import contactsService from "./services/contacts.service";
 
 angular
   .module("app", [])
-  .service("usersService", usersService)
-  .component("usersComponent", UsersComponent);
+  .service("contactsService", contactsService)
+  .component("contactsComponent", contactsComponent);
