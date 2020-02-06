@@ -4,5 +4,5 @@ import usersService from "./services/usersService";
 
 angular
   .module("app", [])
-  .component("usersComponent", UsersComponent)
-  .service("usersService", usersService);
+  .service("usersService", usersService)
+  .component("usersComponent", UsersComponent);
