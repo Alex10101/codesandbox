@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "a6d23925d195c650bff6";
+/******/ 	var hotCurrentHash = "c456b7472134541bf789";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -1011,8 +1011,8 @@ __webpack_require__.r(__webpack_exports__);
 
 angular__WEBPACK_IMPORTED_MODULE_0___default.a
   .module("app", [])
-  .component("usersComponent", _components_users_users_component__WEBPACK_IMPORTED_MODULE_1__["default"])
-  .service("usersService", _services_usersService__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  .service("usersService", _services_usersService__WEBPACK_IMPORTED_MODULE_2__["default"])
+  .component("usersComponent", _components_users_users_component__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
 /***/ }),
@@ -1078,4 +1078,4 @@ function usersService() {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.bundle.a6d2.js.map
+//# sourceMappingURL=app.bundle.c456.js.map
