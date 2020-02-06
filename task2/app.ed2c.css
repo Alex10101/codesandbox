@@ -1,0 +1,38 @@
+* {
+  font-size: 17px; }
+
+.phones-container .checkbox-button {
+  width: 120px;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px;
+  display: inline-block; }
+  .phones-container .checkbox-button.long {
+    width: 150px; }
+
+.phones-container > div {
+  margin: 30px; }
+
+.phones-container .phones table {
+  width: 100%; }
+  .phones-container .phones table td {
+    transition: 0.3s; }
+  .phones-container .phones table .td-short {
+    width: 50px; }
+  .phones-container .phones table .red {
+    background-color: #ff000012; }
+  .phones-container .phones table .blue {
+    background-color: #0000ff17; }
+  .phones-container .phones table input {
+    background: none;
+    border: none; }
+  .phones-container .phones table button {
+    border: none;
+    background: none;
+    border-right: 2px solid black; }
+  .phones-container .phones table button:hover {
+    cursor: pointer; }
+
+
+/*# sourceMappingURL=app.ed2c.css.map*/
