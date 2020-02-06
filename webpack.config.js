@@ -10,7 +10,7 @@ const distPath = path.resolve(__dirname, 'dist');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
-  const distArg = path.resolve(__dirname, argv.dist)
+  const distArg = argv.dist && path.resolve(__dirname, argv.dist)
 
   const plugins = [
     new HtmlWebPackPlugin({
