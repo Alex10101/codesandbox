@@ -3,7 +3,7 @@ export default [
   "filterService",
   function contactList(contactsService, filterService) {
     return {
-      replace:true,
+      replace: true,
       scope: {
         showPhones: "=",
         orderByName: "="
