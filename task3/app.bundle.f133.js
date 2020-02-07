@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "6c63ffef4471b0c79d64";
+/******/ 	var hotCurrentHash = "f13374828caca3bdb446";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -888,13 +888,6 @@ function contactsController($scope, contactsService) {
   ctrl.contactsService = contactsService;
   ctrl.addUser = contactsService.addUser.bind(contactsService);
   ctrl.refreshStorage = contactsService.refreshStorage.bind(contactsService);
-
-  ctrl.setColorByName = function(name) {
-    if (name) {
-      if (name[0] === "A") return "red";
-      if (name[0] === "B") return "blue";
-    }
-  };
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -918,6 +911,35 @@ function contactsController($scope, contactsService) {
 
 /***/ }),
 
+/***/ "./src/app/directives/addColor/addColor.directive.js":
+/*!***********************************************************!*\
+  !*** ./src/app/directives/addColor/addColor.directive.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addColor; });
+function addColor() {
+  return {
+    link: function($scope, element, attrs) {
+      var name = element.scope().name;
+      var set = setColorByName(name);
+
+      function setColorByName(name) {
+        if (name[0] === "A") return "red";
+        if (name[0] === "B") return "blue";
+      }
+
+      set && element.addClass(set);
+    }
+  };
+}
+
+
+/***/ }),
+
 /***/ "./src/app/directives/contact/contact.directive.html":
 /*!***********************************************************!*\
   !*** ./src/app/directives/contact/contact.directive.html ***!
@@ -925,7 +947,7 @@ function contactsController($scope, contactsService) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<tr> <td class=td-short> <button ng-click=contactsService.deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"contactsService.updateUser(user, name, phone)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\"/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> ";
+module.exports = "<tr> <td class=td-short> <button ng-click=contactsService.deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"contactsService.updateUser(user, name, phone)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\" add-color/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> ";
 
 /***/ }),
 
@@ -938,32 +960,23 @@ module.exports = "<tr> <td class=td-short> <button ng-click=contactsService.dele
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (["contactsService", function contacts(contactsService) {
-  return {
-    replace: true,
-    scope: {
-      user: "=",
-      showPhones: '='
-    },
-    template: __webpack_require__(/*! ./contact.directive.html */ "./src/app/directives/contact/contact.directive.html"),
-    styles: [__webpack_require__(/*! ./contact.directive.scss */ "./src/app/directives/contact/contact.directive.scss")],
-    link: function($scope, element, attrs) {
-      $scope.contactsService = contactsService
-    }
-  };
-}]);
+/* harmony default export */ __webpack_exports__["default"] = ([
+  "contactsService",
+  function contacts(contactsService) {
+    return {
+      replace: true,
+      scope: {
+        user: "=",
+        showPhones: "="
+      },
+      template: __webpack_require__(/*! ./contact.directive.html */ "./src/app/directives/contact/contact.directive.html"),
+      link: function($scope, element, attrs) {
+        $scope.contactsService = contactsService;
+      }
+    };
+  }
+]);
 
-
-/***/ }),
-
-/***/ "./src/app/directives/contact/contact.directive.scss":
-/*!***********************************************************!*\
-  !*** ./src/app/directives/contact/contact.directive.scss ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
 
 /***/ }),
 
@@ -992,7 +1005,7 @@ __webpack_require__.r(__webpack_exports__);
   "filterService",
   function contactList(contactsService, filterService) {
     return {
-      replace:true,
+      replace: true,
       scope: {
         showPhones: "=",
         orderByName: "="
@@ -1028,7 +1041,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<input type=text placeholder=\"Filter by all\" ng-model=filterService.value /> ";
+module.exports = "<input type=text placeholder=Search ng-model=filterService.value /> ";
 
 /***/ }),
 
@@ -1047,68 +1060,12 @@ __webpack_require__.r(__webpack_exports__);
     return {
       scope: {},
       template: __webpack_require__(/*! ./filter.directive.html */ "./src/app/directives/filter/filter.directive.html"),
-      styles: [__webpack_require__(/*! ./filter.directive.scss */ "./src/app/directives/filter/filter.directive.scss")],
       link: function($scope, element, attrs) {
         $scope.filterService = filterService;
       }
     };
   }
 ]);
-
-
-/***/ }),
-
-/***/ "./src/app/directives/filter/filter.directive.scss":
-/*!*********************************************************!*\
-  !*** ./src/app/directives/filter/filter.directive.scss ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-// extracted by mini-css-extract-plugin
-
-/***/ }),
-
-/***/ "./src/app/directives/hoverColor/hoverColor.directive.js":
-/*!***************************************************************!*\
-  !*** ./src/app/directives/hoverColor/hoverColor.directive.js ***!
-  \***************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return hoverColor; });
-function hoverColor() {
-  return {
-    link: function($scope, element, attrs) {
-      var name = element.scope().name
-      var set = setColorByName(name)
-
-      function setColorByName(name) {
-        if (name[0] === "A") return "red";
-        if (name[0] === "B") return "blue";
-      }
-
-      set && element.addClass(set)
-    }
-  };
-}
-
-
-// ng-class="{[className]: hover[className + $index], [setColorByName(user.name)]: true}"
-// ng-mouseenter="hover[className + $index] = true"
-// ng-mouseleave="changeColor()"
-
-// $scope.className = 'red';
-//
-// $scope.changeColor = function() {
-//   if ($scope.className === "red") {
-//     $scope.className = "blue";
-//   } else {
-//     $scope.className = "red";
-//   }
-// };
 
 
 /***/ }),
@@ -1139,7 +1096,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _directives_filter_filter_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./directives/filter/filter.directive */ "./src/app/directives/filter/filter.directive.js");
 /* harmony import */ var _directives_contactsList_contactsList_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./directives/contactsList/contactsList.directive */ "./src/app/directives/contactsList/contactsList.directive.js");
 /* harmony import */ var _directives_contact_contact_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./directives/contact/contact.directive */ "./src/app/directives/contact/contact.directive.js");
-/* harmony import */ var _directives_hoverColor_hoverColor_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./directives/hoverColor/hoverColor.directive */ "./src/app/directives/hoverColor/hoverColor.directive.js");
+/* harmony import */ var _directives_addColor_addColor_directive__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./directives/addColor/addColor.directive */ "./src/app/directives/addColor/addColor.directive.js");
 /* harmony import */ var _services_contacts_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/contacts.service */ "./src/app/services/contacts.service.js");
 /* harmony import */ var _services_filter_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./services/filter.service */ "./src/app/services/filter.service.js");
 
@@ -1161,7 +1118,7 @@ angular__WEBPACK_IMPORTED_MODULE_0___default.a
   .directive("appFilter", _directives_filter_filter_directive__WEBPACK_IMPORTED_MODULE_2__["default"])
   .directive("contact", _directives_contact_contact_directive__WEBPACK_IMPORTED_MODULE_4__["default"])
   .directive("contactsList", _directives_contactsList_contactsList_directive__WEBPACK_IMPORTED_MODULE_3__["default"])
-  .directive("hoverColor", _directives_hoverColor_hoverColor_directive__WEBPACK_IMPORTED_MODULE_5__["default"])
+  .directive("addColor", _directives_addColor_addColor_directive__WEBPACK_IMPORTED_MODULE_5__["default"])
   .component("contactsComponent", _components_contacts_contacts_component__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 
@@ -1247,4 +1204,4 @@ __webpack_require__.r(__webpack_exports__);
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.bundle.6c63.js.map
+//# sourceMappingURL=app.bundle.f133.js.map
