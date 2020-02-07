@@ -1,12 +1,14 @@
-function usersController($scope, contactsService) {
-  $scope.users = contactsService.users;
-  $scope.updateUser = contactsService.updateUser
-  $scope.addUser = contactsService.addUser
-  $scope.deleteUser = contactsService.deleteUser
-  $scope.refreshStorage = contactsService.refreshStorage
+export function contactsController($scope, contactsService) {
+  var ctrl = this;
 
-  $scope.setColorByName = function(name) {
-    if(name) {
+  ctrl.contactsService = contactsService;
+  ctrl.updateUser = contactsService.updateUser.bind(contactsService);
+  ctrl.addUser = contactsService.addUser.bind(contactsService);
+  ctrl.deleteUser = contactsService.deleteUser.bind(contactsService);
+  ctrl.refreshStorage = contactsService.refreshStorage.bind(contactsService);
+
+  ctrl.setColorByName = function(name) {
+    if (name) {
       if (name[0] === "A") return "red";
       if (name[0] === "B") return "blue";
     }
@@ -14,7 +16,7 @@ function usersController($scope, contactsService) {
 }
 
 export default {
-  controller: usersController,
+  controller: contactsController,
   template: require("./contacts.component.html"),
   styles: [require("./contacts.component.scss")]
 };

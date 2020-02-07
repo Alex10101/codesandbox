@@ -3,18 +3,17 @@ import contacts from "../dist/contacts.json";
 
 export default function contactsService() {
   this.users = [];
-  setUsers = setUsers.bind(this)
-  setUsers()
+  this.setUsers = function() {
 
-  function setUsers() {
-    console.log(this)
     if (localStorage.getItem("users") === null) {
       localStorage.setItem("users", angular.toJson(contacts));
       this.users = contacts.data;
       return;
     }
     this.users = angular.fromJson(localStorage.getItem("users")).data;
-  }
+  };
+
+  this.setUsers();
 
   this.updateUser = function(user, name, phone, index) {
     this.users[this.users.indexOf(user)] = {
@@ -22,29 +21,27 @@ export default function contactsService() {
       phone: phone,
       $$hashKey: index
     };
-    updateStorage.bind(this)();
+    this.updateStorage();
   };
 
   this.addUser = function(name, phone) {
     if (name && phone) {
       this.users.push({ name: name, phone: phone });
-      updateStorage.bind(this)();
+      this.updateStorage();
     }
   };
 
   this.deleteUser = function(user) {
-    console.log(this.users)
-
     this.users.splice(this.users.indexOf(user), 1);
-    updateStorage.bind(this)();
+    this.updateStorage();
   };
 
   this.refreshStorage = function() {
     localStorage.clear();
-    setUsers()
+    this.setUsers();
   };
 
-  function updateStorage() {
+  this.updateStorage = function() {
     localStorage.setItem("users", angular.toJson({ data: this.users }));
-  }
+  };
 }

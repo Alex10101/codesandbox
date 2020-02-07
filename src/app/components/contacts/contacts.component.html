@@ -8,7 +8,7 @@
       placeholder="Search"
       ng-model="searchText"
     />
-    <button ng-click="refreshStorage()">Refresh Storage</button>
+    <button ng-click="$ctrl.refreshStorage()">Refresh Storage</button>
     <div class="checkbox-button long" ng-click="orderByName = !orderByName">
       <input type="checkbox" ng-model="orderByName" /> Order by Name
     </div>
@@ -16,23 +16,21 @@
     <div>
       <input type="text" placeholder="Name" ng-model="addUser_name" />
       <input type="text" placeholder="Phone" ng-model="addUser_phone" />
-      <button ng-click="addUser(addUser_name, addUser_phone)">Add user</button>
+      <button ng-click="$ctrl.addUser(addUser_name, addUser_phone)">Add user</button>
     </div>
   </div>
 
   <div class="phones">
     <table cellspacing="0">
-      <!--          todo:  filter into directive-->
       <tr
-        ng-if="users.length"
-        ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : ''"
+        ng-repeat="user in $ctrl.contactsService.users | filter:searchText | orderBy: orderByName ? 'name' : ''"
         ng-class="{[setColorByName(user.name)]: true}"
       >
         <td class="td-short">
-          <button ng-click="deleteUser(user)">Delete</button>
+          <button ng-click="$ctrl.deleteUser(user)">Delete</button>
         </td>
         <td class="td-short">
-          <button ng-click="updateUser(user, name, phone, $index)">
+          <button ng-click="$ctrl.updateUser(user, name, phone)">
             Update
           </button>
         </td>
