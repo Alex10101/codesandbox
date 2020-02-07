@@ -1,0 +1,40 @@
+* {
+  font-size: 17px; }
+
+.phones-container .checkbox-button {
+  width: 120px;
+  border: 1px solid #d3d3d3;
+  cursor: pointer;
+  user-select: none;
+  padding: 5px;
+  display: inline-block; }
+  .phones-container .checkbox-button.long {
+    width: 150px; }
+
+.phones-container > div {
+  margin: 30px; }
+
+
+.table {
+  width: 100%; }
+  .table td {
+    transition: 0.3s; }
+  .table .td-short {
+    width: 50px; }
+  .table .red {
+    background-color: #ff000012; }
+  .table .blue {
+    background-color: #0000ff17; }
+  .table input {
+    background: none;
+    border: none; }
+  .table button {
+    border: none;
+    background: none;
+    border-right: 2px solid black; }
+  .table button:hover {
+    cursor: pointer; }
+
+
+
+/*# sourceMappingURL=app.7159.css.map*/
