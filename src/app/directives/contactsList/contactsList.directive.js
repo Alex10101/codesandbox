@@ -3,7 +3,7 @@ export default [
   "filterService",
   function contactList(contactsService, filterService) {
     return {
-      restrict: "E",
+      replace:true,
       scope: {
         showPhones: "=",
         orderByName: "="
@@ -11,7 +11,7 @@ export default [
       template: require("./contactsList.directive.html"),
       styles: require("./contactsList.directive.scss"),
       link: function($scope, element, attrs) {
-        $scope.service = contactsService;
+        $scope.contactsService = contactsService;
         $scope.filterService = filterService;
       }
     };

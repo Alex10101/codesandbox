@@ -1,25 +1,9 @@
-<table cellspacing="0">
-  <tr
-    ng-repeat="user in service.users | filter:filterService.value | orderBy: orderByName ? 'name' : ''"
-  >
-    <td class="td-short">
-      <button ng-click="service.deleteUser(user)">Delete</button>
-    </td>
-    <td class="td-short">
-      <button ng-click="service.updateUser(user, name, phone)">
-        Update
-      </button>
-    </td>
-    <td class="td-short">
-      <input type="text" ng-model="name" ng-init="name=user.name" hover-color />
-    </td>
-    <td>
-      <input
-        type="text"
-        ng-model="phone"
-        ng-init="phone=user.phone"
-        ng-show="showPhones"
-      />
-    </td>
-  </tr>
-</table>
+<div class="phones">
+  <div class="table">
+    <contact
+      ng-repeat="user in contactsService.users | filter:filterService.value | orderBy: orderByName ? 'name' : ''"
+      user="user"
+      show-phones="showPhones"
+    ></contact>
+  </div>
+</div>

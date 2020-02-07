@@ -11,11 +11,11 @@ import contactsService from "./services/contacts.service";
 import filterService from "./services/filter.service";
 
 angular
-.module("app", [])
-.service("contactsService", contactsService)
-.service("filterService", filterService)
-.directive("appFilter", appFilter)
-.directive("contact", contact)
-.directive("contactsList", contactsList)
-.directive("hoverColor", hoverColor)
-.component("contactsComponent", contactsComponent);
+  .module("app", [])
+  .service("contactsService", contactsService)
+  .service("filterService", filterService)
+  .directive("appFilter", appFilter)
+  .directive("contact", contact)
+  .directive("contactsList", contactsList)
+  .directive("hoverColor", hoverColor)
+  .component("contactsComponent", contactsComponent);

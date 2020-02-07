@@ -1,14 +1,14 @@
-export default function contacts() {
+export default ["contactsService", function contacts(contactsService) {
   return {
+    replace: true,
     scope: {
       user: "=",
+      showPhones: '='
     },
-    replace: true,
-    transclude:true,
     template: require("./contact.directive.html"),
     styles: [require("./contact.directive.scss")],
     link: function($scope, element, attrs) {
-      console.log($scope)
+      $scope.contactsService = contactsService
     }
   };
-}
+}]
