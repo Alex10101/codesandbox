@@ -7,17 +7,18 @@
       <input type="checkbox" ng-checked="showPhones" /> Show phones
     </div>
     <app-filter search-text="searchText"></app-filter>
-    <button ng-click="refreshStorage()">Refresh Storage</button>
+    <button ng-click="$ctrl.refreshStorage()">Refresh Storage</button>
 
     <div>
       <input type="text" placeholder="Name" ng-model="addUser_name" />
       <input type="text" placeholder="Phone" ng-model="addUser_phone" />
-      <button ng-click="addUser(addUser_name, addUser_phone)">Add user</button>
+      <button ng-click="$ctrl.addUser(addUser_name, addUser_phone)">
+        Add user
+      </button>
     </div>
   </div>
   <div class="phones">
     <contacts-list
-      users="users"
       show-phones="showPhones"
       order-by-name="orderByName"
     ></contacts-list>

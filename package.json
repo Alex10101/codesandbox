@@ -3,7 +3,7 @@
   "version": "2.1.1",
   "scripts": {
     "start": "webpack-dev-server --mode=development --open",
-    "build": "webpack --mode=production --optimize-minimize"
+    "build": "webpack --mode=development"
   },
   "dependencies": {
     "angular": "^1.7.8",

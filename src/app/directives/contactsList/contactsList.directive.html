@@ -1,12 +1,12 @@
 <table cellspacing="0">
   <tr
-    ng-repeat="user in users | filter:searchText | orderBy: orderByName ? 'name' : ''"
+    ng-repeat="user in service.users | filter:filterService.value | orderBy: orderByName ? 'name' : ''"
   >
     <td class="td-short">
-      <button ng-click="deleteUser(user)">Delete</button>
+      <button ng-click="service.deleteUser(user)">Delete</button>
     </td>
     <td class="td-short">
-      <button ng-click="updateUser(user, name, phone)">
+      <button ng-click="service.updateUser(user, name, phone)">
         Update
       </button>
     </td>

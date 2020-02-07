@@ -10,6 +10,7 @@ const distPath = path.resolve(__dirname, 'dist');
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
+  const distArg = argv.dist && path.resolve(__dirname, argv.dist)
 
   const plugins = [
     new HtmlWebPackPlugin({
@@ -37,7 +38,7 @@ module.exports = (env, argv) => {
       app: sourcePath + '/app/index.js'
     },
     output: {
-      path: distPath,
+      path: distArg || distPath,
       filename: '[name].bundle.[hash:4].js',
     },
     module: {
