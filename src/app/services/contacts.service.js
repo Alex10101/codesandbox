@@ -3,12 +3,10 @@ import contacts from "../dist/contacts.json";
 
 export default function contactsService() {
   this.users = [];
-  this.setUsers = function() {
 
+  this.setUsers = function() {
     if (localStorage.getItem("users") === null) {
       localStorage.setItem("users", angular.toJson(contacts));
-      this.users = contacts.data;
-      return;
     }
     this.users = angular.fromJson(localStorage.getItem("users")).data;
   };
