@@ -113,7 +113,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "6b344fc84e0c71bbbe15";
+/******/ 	var hotCurrentHash = "c671810ffd96c7638c98";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -868,7 +868,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=phones-container ng-init=\"showPhones = true; orderByName = true\"> <div class=buttons-panel> <div class=checkbox-button ng-click=\"showPhones = !showPhones\"> <input type=checkbox ng-model=showPhones /> Show phones </div> <input type=text placeholder=Search ng-model=searchText /> <button ng-click=refreshStorage()>Refresh Storage</button> <div class=\"checkbox-button long\" ng-click=\"orderByName = !orderByName\"> <input type=checkbox ng-model=orderByName /> Order by Name </div> <div> <input type=text placeholder=Name ng-model=addUser_name /> <input type=text placeholder=Phone ng-model=addUser_phone /> <button ng-click=\"addUser(addUser_name, addUser_phone)\">Add user</button> </div> </div> <div class=phones> <table cellspacing=0> <tr ng-if=users.length ng-repeat=\"user in users | filter:searchText | orderBy: orderByName ? 'name' : ''\" ng-class=\"{[setColorByName(user.name)]: true}\"> <td class=td-short> <button ng-click=deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"updateUser(user, name, phone, $index)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\"/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> </table> </div> </div> ";
+module.exports = "<div class=phones-container ng-init=\"showPhones = true; orderByName = true\"> <div class=buttons-panel> <div class=checkbox-button ng-click=\"showPhones = !showPhones\"> <input type=checkbox ng-model=showPhones /> Show phones </div> <input type=text placeholder=Search ng-model=searchText /> <button ng-click=$ctrl.refreshStorage()>Refresh Storage</button> <div class=\"checkbox-button long\" ng-click=\"orderByName = !orderByName\"> <input type=checkbox ng-model=orderByName /> Order by Name </div> <div> <input type=text placeholder=Name ng-model=addUser_name /> <input type=text placeholder=Phone ng-model=addUser_phone /> <button ng-click=\"$ctrl.addUser(addUser_name, addUser_phone)\"> Add user </button> </div> </div> <div class=phones> <table cellspacing=0> <tr ng-repeat=\"user in $ctrl.contactsService.users | filter:searchText | orderBy: orderByName ? 'name' : ''\" ng-class=\"{[$ctrl.setColorByName(user.name)]: true}\"> <td class=td-short> <button ng-click=$ctrl.deleteUser(user)>Delete</button> </td> <td class=td-short> <button ng-click=\"$ctrl.updateUser(user, name, phone)\"> Update </button> </td> <td class=td-short> <input type=text ng-model=name ng-init=\"name=user.name\"/> </td> <td> <input type=text ng-model=phone ng-init=\"phone=user.phone\" ng-show=showPhones /> </td> </tr> </table> </div> </div> ";
 
 /***/ }),
 
@@ -876,20 +876,23 @@ module.exports = "<div class=phones-container ng-init=\"showPhones = true; order
 /*!***********************************************************!*\
   !*** ./src/app/components/contacts/contacts.component.js ***!
   \***********************************************************/
-/*! exports provided: default */
+/*! exports provided: contactsController, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function usersController($scope, contactsService) {
-  $scope.users = contactsService.users;
-  $scope.updateUser = contactsService.updateUser
-  $scope.addUser = contactsService.addUser
-  $scope.deleteUser = contactsService.deleteUser
-  $scope.refreshStorage = contactsService.refreshStorage
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "contactsController", function() { return contactsController; });
+function contactsController($scope, contactsService) {
+  var ctrl = this;
 
-  $scope.setColorByName = function(name) {
-    if(name) {
+  ctrl.contactsService = contactsService;
+  ctrl.updateUser = contactsService.updateUser.bind(contactsService);
+  ctrl.addUser = contactsService.addUser.bind(contactsService);
+  ctrl.deleteUser = contactsService.deleteUser.bind(contactsService);
+  ctrl.refreshStorage = contactsService.refreshStorage.bind(contactsService);
+
+  ctrl.setColorByName = function(name) {
+    if (name) {
       if (name[0] === "A") return "red";
       if (name[0] === "B") return "blue";
     }
@@ -897,7 +900,7 @@ function usersController($scope, contactsService) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  controller: usersController,
+  controller: contactsController,
   template: __webpack_require__(/*! ./contacts.component.html */ "./src/app/components/contacts/contacts.component.html"),
   styles: [__webpack_require__(/*! ./contacts.component.scss */ "./src/app/components/contacts/contacts.component.scss")]
 });
@@ -971,18 +974,15 @@ var _dist_contacts_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__
 
 function contactsService() {
   this.users = [];
-  setUsers = setUsers.bind(this)
-  setUsers()
 
-  function setUsers() {
-    console.log(this)
+  this.setUsers = function() {
     if (localStorage.getItem("users") === null) {
       localStorage.setItem("users", angular__WEBPACK_IMPORTED_MODULE_0___default.a.toJson(_dist_contacts_json__WEBPACK_IMPORTED_MODULE_1__));
-      this.users = _dist_contacts_json__WEBPACK_IMPORTED_MODULE_1__.data;
-      return;
     }
     this.users = angular__WEBPACK_IMPORTED_MODULE_0___default.a.fromJson(localStorage.getItem("users")).data;
-  }
+  };
+
+  this.setUsers();
 
   this.updateUser = function(user, name, phone, index) {
     this.users[this.users.indexOf(user)] = {
@@ -990,35 +990,33 @@ function contactsService() {
       phone: phone,
       $$hashKey: index
     };
-    updateStorage.bind(this)();
+    this.updateStorage();
   };
 
   this.addUser = function(name, phone) {
     if (name && phone) {
       this.users.push({ name: name, phone: phone });
-      updateStorage.bind(this)();
+      this.updateStorage();
     }
   };
 
   this.deleteUser = function(user) {
-    console.log(this.users)
-
     this.users.splice(this.users.indexOf(user), 1);
-    updateStorage.bind(this)();
+    this.updateStorage();
   };
 
   this.refreshStorage = function() {
     localStorage.clear();
-    setUsers()
+    this.setUsers();
   };
 
-  function updateStorage() {
+  this.updateStorage = function() {
     localStorage.setItem("users", angular__WEBPACK_IMPORTED_MODULE_0___default.a.toJson({ data: this.users }));
-  }
+  };
 }
 
 
 /***/ })
 
 /******/ });
-//# sourceMappingURL=app.bundle.6b34.js.map
+//# sourceMappingURL=app.bundle.c671.js.map
